@@ -1,0 +1,17 @@
+pandas
+scikit-learn
+requests
+python-dotenv
+streamlit
+pytorch
+tensorflow
+langchain
+langchain-core
+langchain-community
+langchain-groq
+langgraph
+hopsworks[python]
+prophet
+shap
+statsmodels #for sarimax
+lime
