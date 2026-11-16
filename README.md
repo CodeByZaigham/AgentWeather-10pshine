@@ -17,3 +17,41 @@
 
 ---
 
+## AgentWeather Architecture
+
+```mermaid
+flowchart TD
+    A["<b>External data sources</b><br/>OpenWeather API · AQICN API<br/>Weather, pollutants and historical observations"]
+    B["<b>Data ingestion and feature engineering</b><br/>Python · Requests · Pandas · NumPy<br/>Cleaning · Alignment · Imputation · Feature generation"]
+    C["<b>Hopsworks Feature Store</b><br/>Raw observations · Engineered features · Training data"]
+
+    subgraph D["ML training and model selection"]
+        direction TB
+        D1["<b>SARIMAX</b><br/>Statistical"]
+        D2["<b>Random Forest</b><br/>Classical ML"]
+        D3["<b>LSTM</b><br/>Deep learning"]
+        D4["Validation · Naive baseline · RMSE · MAE · R²"]
+        D1 ~~~ D4
+        D2 ~~~ D4
+        D3 ~~~ D4
+    end
+
+    E["<b>Hopsworks Model Registry</b><br/>Store models, versions and validation performance"]
+
+    subgraph F["LangGraph agentic layer"]
+        direction TB
+        F1["<b>Forecast Agent</b><br/>Generates forecasts"]
+        F2["<b>Alert Agent</b><br/>Hazard detection"]
+        F3["<b>Weather Report Agent</b><br/>News-style reports"]
+        F4["<b>Drift Agent</b><br/>Data and model monitoring"]
+        F1 ~~~ F2
+        F3 ~~~ F4
+    end
+
+    G["<b>Forecast Ledger and monitoring</b><br/>Forecasts · Agent decisions · LLM calls · Drift events · Failures"]
+    H["<b>Streamlit dashboard</b><br/>Forecasts · Reports · Alerts · EDA · SHAP · Drift · Agent activity"]
+    I["<b>Automated with GitHub Actions</b><br/>Hourly ingestion · Hourly forecasting · Daily training · Drift-triggered retraining"]
+
+    A --> B --> C --> D --> E --> F --> G --> H
+    H -.-> I
+```
