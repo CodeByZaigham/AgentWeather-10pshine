@@ -52,10 +52,15 @@ def get_weather(city: str) -> dict:
 
     current = response.json()["current"]
 
+    #wind direction encoding for 359 and 1 degree to be remain identical
     wind_direction=current["wind_direction_10m"]
     wind_radians=np.radians(wind_direction)
-    wind_sine=np.sin(wind_radians)
-    wind_cosine=np.cos(wind_radians)
+    wind_sine=float(np.sin(wind_radians))
+    wind_cosine=float(np.cos(wind_radians))
+
+    # wind_direction = float(
+    #     np.degrees(np.arctan2(wind_sine, wind_cosine)) + 360
+    # ) % 360
 
     return {
         "city": city,
@@ -68,6 +73,7 @@ def get_weather(city: str) -> dict:
         "wind_speed": current["wind_speed_10m"],
         "wind_sine":wind_sine,
         "wind_cosine":wind_cosine
+        # "wind_direction":wind_direction
     }
 
 
