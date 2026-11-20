@@ -1,7 +1,7 @@
 import os
 import requests
 from rich import print
-
+import numpy as np
 from datetime import datetime
 
 
@@ -52,6 +52,11 @@ def get_weather(city: str) -> dict:
 
     current = response.json()["current"]
 
+    wind_direction=current["wind_direction_10m"]
+    wind_radians=np.radians(wind_direction)
+    wind_sine=np.sin(wind_radians)
+    wind_cosine=np.cos(wind_radians)
+
     return {
         "city": city,
         "time": current["time"],
@@ -61,7 +66,8 @@ def get_weather(city: str) -> dict:
         "precipitation_probability": current["precipitation_probability"],
         "uv_index": current["uv_index"],
         "wind_speed": current["wind_speed_10m"],
-        "wind_direction": current["wind_direction_10m"]
+        "wind_sine":wind_sine,
+        "wind_cosine":wind_cosine
     }
 
 
