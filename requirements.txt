@@ -3,15 +3,20 @@ scikit-learn
 requests
 python-dotenv
 streamlit
-pytorch
+torch
 tensorflow
 langchain
 langchain-core
 langchain-community
 langchain-groq
 langgraph
-hopsworks[python]
+hopsworks[python]>=5.2.3,<5.3
 prophet
 shap
 statsmodels #for sarimax
 lime
+rich
+pydantic
+joblib
+pytest
+plotly
